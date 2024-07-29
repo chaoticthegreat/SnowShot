@@ -17,7 +17,7 @@ class CalibrationConfig:
 
 
 @dataclass
-class NTConfig:
+class CameraConfig:
     cameraID: int = 0
     cameraResolutionWidth: int = 1080
     cameraResolutionHeight: int = 720
@@ -30,3 +30,10 @@ class NTConfig:
     cameraSaturation: int = 0
     tagSize: float = 0.2
     tagLayout: any = None
+
+
+@dataclass
+class Configuration:
+    ntConfig: NetworkTablesConfig
+    calibConfig: CalibrationConfig
+    cameraConfig: CameraConfig
