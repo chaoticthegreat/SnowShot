@@ -1,5 +1,6 @@
 import json
 
+import cv2
 import ntcore
 import numpy as np
 
@@ -7,10 +8,10 @@ from config.config import Configuration
 
 
 def load_calibration_config(config: Configuration, calibration_filename: str) -> None:
-    with open(calibration_filename, 'r') as f:
-        data = json.load(f)
-        config.calibConfig.cameraMatrix = np.array(data['cameraMatrix'])
-        config.calibConfig.distortionCoefficients = np.array(data['distortionCoefficients'])
+    calib_store = cv2.FileStorage(calibration_filename, cv2.FILE_STORAGE_READ)
+    config.calibConfig.cameraMatrix = calib_store.getNode('camera_matrix').mat()
+    config.calibConfig.distortionCoefficients = calib_store.getNode('distortion_coefficients').mat()
+    calib_store.release()
 
 
 def load_nt_config(config: Configuration, config_filename: str) -> None:
@@ -19,6 +20,14 @@ def load_nt_config(config: Configuration, config_filename: str) -> None:
         config.ntConfig.deviceID = data['deviceID']
         config.ntConfig.serverIP = data['serverIP']
         config.ntConfig.streamPort = data['streamPort']
+
+
+def config_changed(config_a: Configuration, config_b: Configuration) -> bool:
+    if config_a is None and config_b is None:
+        return False
+    if config_a is None or config_b is None:
+        return True
+    return config_a.cameraConfig.cameraID != config_b.cameraConfig.cameraID or config_a.cameraConfig.cameraResolutionWidth != config_b.cameraConfig.cameraResolutionWidth or config_a.cameraConfig.cameraResolutionHeight != config_b.cameraConfig.cameraResolutionHeight or config_a.cameraConfig.cameraHue != config_b.cameraConfig.cameraHue or config_a.cameraConfig.cameraSaturation != config_b.cameraConfig.cameraSaturation or config_a.cameraConfig.cameraBrightness != config_b.cameraConfig.cameraBrightness or config_a.cameraConfig.cameraContrast != config_b.cameraConfig.cameraContrast or config_a.cameraConfig.cameraExposure != config_b.cameraConfig.cameraExposure or config_a.cameraConfig.cameraAutoExposure != config_b.cameraConfig.cameraAutoExposure or config_a.cameraConfig.cameraGain != config_b.cameraConfig.cameraGain
 
 
 class ConfigManager():
@@ -71,5 +80,6 @@ class ConfigManager():
         config.cameraConfig.tagSize = self._tag_size.get()
         try:
             config.cameraConfig.tagLayout = json.loads(self._tag_layout.get())
-        except:
+        except Exception as e:
             config.cameraConfig.tagLayout = None
+            print("Failed to parse tag layout")

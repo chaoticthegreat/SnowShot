@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import numpy as np
 import numpy.typing
 
@@ -8,12 +8,13 @@ class NetworkTablesConfig:
     deviceID: str = ''
     serverIP: str = ''
     streamPort: int = 8000
+    enableStream: bool = True
 
 
 @dataclass
 class CalibrationConfig:
-    cameraMatrix: np.typing.NDArray[np.float64] = np.array([])
-    distortionCoefficients: np.typing.NDArray[np.float64] = np.array([])
+    cameraMatrix: np.typing.NDArray[np.float64] = field(default_factory=lambda: np.array([]))
+    distortionCoefficients: np.typing.NDArray[np.float64] = field(default_factory=lambda: np.array([]))
 
 
 @dataclass
