@@ -6,7 +6,7 @@ import ntcore
 
 from config.config import Configuration
 from pipelines.Pipeline import Pipeline
-from pipelines.visionDataClasses import Tag
+from pipelines.VisionDataClasses import Tag
 
 
 class ArucoPipeline(Pipeline):
