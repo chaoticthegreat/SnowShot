@@ -8,7 +8,7 @@ import numpy as np
 from config.ConfigManager import load_calibration_config, load_nt_config, ConfigManager, config_changed
 from config.config import Configuration, NetworkTablesConfig, CalibrationConfig, CameraConfig
 from pipelines.ArucoPipeline import ArucoPipeline
-from pipelines.CameraPoseEstimator import solve_camera_pose
+from pipelines.PoseEstimator import solve_camera_pose
 from pipelines.Pipeline import Pipeline
 from pipelines.PosePublisher import PosePublisher
 

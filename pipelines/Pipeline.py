@@ -38,7 +38,7 @@ class Pipeline:
         time.sleep(1)
         self.initialize(config)
 
-    def get_frame(self) -> Tuple[bool, cv2.Mat]:
+    def get_frame(self) -> Tuple[bool, cv2.Mat]: # note: change to UMat if you post process
         if self._video_pipeline is not None:
             return self._video_pipeline.read()
         return False, cv2.Mat(np.ndarray([]))
