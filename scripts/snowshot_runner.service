@@ -1,0 +1,16 @@
+[Unit]
+Description=Service to boot SnowShot
+
+[Service]
+WorkingDirectory=/opt/SnowShot
+# Run polaris at "nice" -10, which is higher priority than standard
+Nice=-10
+ExecStart=/usr/bin/python3 /opt/SnowShot/snowshot.py
+ExecStop=/bin/systemctl kill polaris
+Type=simple
+Restart=on-failure
+RestartSec=0.5
+User=orangepi
+
+[Install]
+WantedBy=multi-user.target

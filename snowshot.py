@@ -41,7 +41,9 @@ def main():
     frames = 0
     last_print = 0
     while True:
-        last_config = Configuration(dataclasses.replace(config_data.ntConfig), dataclasses.replace(config_data.calibConfig), dataclasses.replace(config_data.cameraConfig))
+        last_config = Configuration(dataclasses.replace(config_data.ntConfig),
+                                    dataclasses.replace(config_data.calibConfig),
+                                    dataclasses.replace(config_data.cameraConfig))
         config_manager.update_camera_config(config_data)
         fps = None
         frames += 1
@@ -62,7 +64,6 @@ def main():
 
         pipeline.send_to_nt(tags, config_data, time.time())
         pose_publisher.send(time.time(), poses, fps)
-
 
 
 if __name__ == "__main__":

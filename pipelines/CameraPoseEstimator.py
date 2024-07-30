@@ -10,7 +10,7 @@ import numpy.typing
 from config.config import Configuration
 from pipelines.VisionDataClasses import Poses, Tag
 
-
+# Stolen from 6328 Northstar
 def openCVPoseToWPILib(tvec: np.typing.NDArray[np.float64], rvec: np.typing.NDArray[np.float64]) -> Pose3d:
     return Pose3d(
         Translation3d(tvec[2][0], -tvec[0][0], -tvec[1][0]),
