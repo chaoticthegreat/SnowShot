@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Union
+from typing import Union, List
 
 import numpy as np
 import numpy.typing
@@ -24,3 +24,10 @@ class PoseOutput:
 class AprilTag:
     tagID: int
     pose: wpimath.geometry.Pose3d
+
+
+@dataclass(frozen=True)
+class YoloNoteDetection:
+    confidence: float
+    box: List[float]  # in format xyxy
+    latency: float
